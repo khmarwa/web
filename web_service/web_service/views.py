@@ -26,7 +26,7 @@ from rasa_nlu.model import Interpreter
 import os
 model_file = os.path.abspath('web_service/Model/LSTM_model_glove_300_DATA_without_text_processing.sav')
 token_file = os.path.abspath('web_service/Model/LSTM_token_glove_300d_DATA_without_text_processing.sav')
-nlu_file = os.path.abspath('web_service/current/')
+nlu_file = os.path.abspath('web_service/RASA_model/')
 #########################################################################
 #model_file= "C:/Users/khmar/git_repo/IssueModelTraining/LSTM/without_text_processing/Model/LSTM_model_glove_200_DATA_without_text_processing.sav"
 #token_file= "C:/Users/khmar/git_repo/IssueModelTraining/LSTM/without_text_processing/Model/LSTM_token_glove_200d_DATA_without_text_processing.sav"
