@@ -21,30 +21,32 @@ from rasa_nlu.model import Interpreter
 
 #file="C:/Users/khmar/model_CNN.sav"
 #file1="C:/Users/khmar/token.sav"
-model_file= "C:/Users/khmar/git_repo/IssueModelTraining/CNN/without_text_preprocessing/Model/CNN_model3_normal_embeddings_DATA_with_text_processing.sav"
-token_file= "C:/Users/khmar/git_repo/IssueModelTraining/CNN/without_text_preprocessing/Model/CNN_token_normal_embeddings_without_text_preprocessing_DATA.sav"
+#model_file= "C:/Users/khmar/git_repo/IssueModelTraining/CNN/without_text_preprocessing/Model/CNN_model3_normal_embeddings_DATA_with_text_processing.sav"
+#token_file= "C:/Users/khmar/git_repo/IssueModelTraining/CNN/without_text_preprocessing/Model/CNN_token_normal_embeddings_without_text_preprocessing_DATA.sav"
+import os
+model_file = os.path.abspath('web_service/Model/LSTM_model_glove_300_DATA_without_text_processing.sav')
+token_file = os.path.abspath('web_service/Model/LSTM_token_glove_300d_DATA_without_text_processing.sav')
+nlu_file = os.path.abspath('web_service/current/')
 #########################################################################
-#file= "C:/Users/khmar/git_repo/IssueModelTraining/LSTM/with_text_processing/Model/LSTM_model_glove_200_DATA_with_text_processing.sav"
-#file1= "C:/Users/khmar/git_repo/IssueModelTraining/LSTM/with_text_processing/Model/LSTM_token_glove_200d_DATA_with_text_processing.sav"
-#num_max = 200
+#model_file= "C:/Users/khmar/git_repo/IssueModelTraining/LSTM/without_text_processing/Model/LSTM_model_glove_200_DATA_without_text_processing.sav"
+#token_file= "C:/Users/khmar/git_repo/IssueModelTraining/LSTM/without_text_processing/Model/LSTM_token_glove_200d_DATA_without_text_processing.sav"
+num_max = 200
 ################################################""
 
-num_max = 1000
-
-
+#num_max = 1000
 @api_view(["POST"])
 def prediction_request(text):
     try:
    	 
        msg =json.loads(text.body)
        #nlu
-       interpreter = Interpreter.load("C:/Users/khmar/git_repo/IssueModelTraining/RASA/models/nlu/default/current")
+       
+       interpreter = Interpreter.load(nlu_file)
 
        intent=interpreter.parse(msg["message"])
        #
        #loaded_model = pickle.load(open(model_file, 'rb'))
        loaded_model= load_model(model_file)
-
        token = pickle.load(open(token_file, 'rb'))
        x_input = np.array([msg["message"]])
        seq= token.texts_to_sequences(x_input)
