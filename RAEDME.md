@@ -1,8 +1,8 @@
 # Project: ISSUE Detection from Text
 
 ## IssueModelService
-This is a web service created with django Framework to consume a sentiment model classification and a rasa nlu model
-   * The sentiment model classification classify short texts into positive, negative and neutral sentiment
+This is a web service created with django Framework to consume a issue model classification and a rasa nlu model
+   * The sentiment model classification classify short texts into ISSUE or NOT_ISSUE
    * The rasa nlu model classify short texts into many intents
 
 ### Install dependencies
