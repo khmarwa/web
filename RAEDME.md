@@ -27,3 +27,5 @@ This is a web service created with django Framework to consume a issue model cla
 ```
 python manage.py runserver
 ```
+To test this web service input should be a json object and contains 2 key: "id" and "message" and the 2 values must be string
+
