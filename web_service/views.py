@@ -44,6 +44,7 @@ def prediction_request(text):
        seq= token.texts_to_sequences(x_input)
        seqs = pad_sequences(seq, maxlen=num_max)
        probability = loaded_model.predict(seqs)
+       #predict_proba
        proba=probability[0][0]
        c_pred = loaded_model.predict_classes(seqs)
        class_pred=str(list(np.reshape(np.asarray(c_pred), (1, np.size(c_pred)))[0]))[1:-1]
