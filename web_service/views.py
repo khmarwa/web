@@ -67,7 +67,7 @@ def prediction_request(text):
        
        return HttpResponse(json.dumps({"id":msg["id"],"message":msg["message"],"label":x,"probability":str(probability),"intent":intent['intent']['name']}), content_type='application/json')
        #return HttpResponse(json.dumps({"id":msg["id"],"message":msg["message"],"label":x,"probability":str(prob)}), content_type='application/json')
-       #K.clear_session()
+       K.clear_session()
    
     except ValueError as e:
        return Response(e.args[0],status.HTTP_400_BAD_REQUEST)
