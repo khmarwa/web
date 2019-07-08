@@ -25,7 +25,7 @@ SECRET_KEY = 'hz12@g%y#93h4lh1h339_u61lg4u#g-62)=@y-q(772*k^+%-c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

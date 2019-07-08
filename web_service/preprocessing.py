@@ -5,25 +5,17 @@
 
 
 import os
-import pandas as pd
+import nltk
+import inflect
+from nltk.stem import WordNetLemmatizer
+import gensim
+from gensim import parsing
+from gensim.parsing.preprocessing import split_alphanum
+#from spellchecker import SpellChecker
+import re
 
 
 # In[2]:
-
-
-import os
-DATA_FILE = os.path.abspath('DATA/data.csv')
-df = pd.read_csv(DATA_FILE,delimiter=';',encoding='UTF-8')
-print(df.head())
-
-
-# In[3]:
-
-
-df['label'].value_counts() #balanced Dataset
-
-
-# In[4]:
 
 
 # List stop words
@@ -43,7 +35,7 @@ STOP_WORDS ={
  'also',
  'although',
  'always',
- #'am',
+ 'am',
  'among',
  'amongst',
  'amount',
@@ -65,11 +57,11 @@ STOP_WORDS ={
  #'become',
  #'becomes',
  #'becoming',
- #'been',
+ 'been',
  'before',
  'beforehand',
  #'behind',
- #'being',
+ 'being',
  'below',
  'beside',
  'besides',
@@ -307,7 +299,7 @@ STOP_WORDS ={
  'yourselves'}
 
 
-# In[5]:
+# In[3]:
 
 
 switcher = {
@@ -1041,7 +1033,7 @@ switcher = {
 }
 
 
-# In[6]:
+# In[4]:
 
 
 import nltk
@@ -1050,11 +1042,11 @@ from nltk.stem import WordNetLemmatizer
 import gensim
 from gensim import parsing
 from gensim.parsing.preprocessing import split_alphanum
-from spellchecker import SpellChecker
+#from spellchecker import SpellChecker
 import re
 
 
-# In[8]:
+# In[5]:
 
 
 def replace_word(word):
@@ -1064,6 +1056,22 @@ def replace_word(word):
         word[i] = switcher.get(word[i], word[i])
     word = " ".join(word)
     return word
+
+def remove_alphanumerics(text):
+    """
+    Remove alphanumeric words from text
+    Example: hello man whatsup123 => hello man
+    Args:
+        text (str): text
+    Returns:
+        text (str): text with removed alphanumeric words
+    """
+    txt = []
+    for each in text.split():
+        if not any(x in each.lower() for x in "0123456789"):
+            txt.append(each)
+    txtsent = " ".join(txt)
+    return txtsent
 
 ##Fixing Word Lengthening
 ##https://rustyonrampa"ge.github.io/text-mining/2017/11/28/spelling-correction-with-python-and-nltk.html
@@ -1087,6 +1095,7 @@ def transformText(text):
     text = replace_word(text)
     text = replace_numbers(text)
     text = reduce_lengthening(text)
+    text=remove_alphanumerics(text)
     # Removing non ASCII chars    
     text = re.sub(r'[^\x00-\x7f]',r' ',text)
     # Removing all the stopwords
@@ -1098,7 +1107,7 @@ def transformText(text):
     # remove html markup
     text = re.sub("(<.*?>)","",text)
     # Correct words
-    spell = SpellChecker()
+    """spell = SpellChecker()
     misspelled = text.split()
     wordnet_lemmatizer = WordNetLemmatizer()
     for i in range(len(misspelled)):
@@ -1107,7 +1116,7 @@ def transformText(text):
         misspelled[i]=word
         misspelled[i] = wordnet_lemmatizer.lemmatize(misspelled[i], pos="v")
         misspelled[i] = wordnet_lemmatizer.lemmatize(misspelled[i], pos="n")
-    text = " ".join(misspelled)
+    text = " ".join(misspelled)"""
     
     # Strip multiple whitespaces
     text = gensim.corpora.textcorpus.strip_multiple_whitespaces(text)
